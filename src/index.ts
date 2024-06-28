@@ -1,5 +1,6 @@
 import { Elysia } from "elysia";
 import puppeteer from "puppeteer";
+import { cors } from '@elysiajs/cors'
 
 
 const app = new Elysia()
@@ -35,6 +36,7 @@ const app = new Elysia()
       },
     });
   })
+  .use(cors())
   .listen(8080);
 
 console.log(

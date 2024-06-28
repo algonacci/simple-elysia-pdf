@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Fetcher</title>
+</head>
+
+<body>
+    <h1>PDF Fetcher</h1>
+    <button id="fetch-pdf">Fetch PDF</button>
+
+    <script>
+        document.getElementById('fetch-pdf').addEventListener('click', async () => {
+            try {
+                const response = await fetch('http://localhost:8080/pdf');
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'example.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                } else {
+                    console.error('Failed to fetch the PDF');
+                }
+            } catch (error) {
+                console.error('Error fetching the PDF:', error);
+            }
+        });
+    </script>
+</body>
+
+</html>
